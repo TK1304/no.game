@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #guessInput {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Number Guessing Game</h1>
+    <p id="instructions">Guess the number between 1 and 100.</p>
+    <input type="number" id="guessInput" min="1" max="100">
+    <button onclick="checkGuess()">Guess</button>
+    <p id="message"></p>
+
+    <script>
+        let randomNumber;
+        let attempts = 0;
+        const maxAttempts = 10;
+        let totalRounds = 0;
+        let totalAttempts = 0;
+
+        function startNewRound() {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            totalRounds++;
+            document.getElementById('instructions').textContent = `Round ${totalRounds}. Guess the number between 1 and 100.`;
+            document.getElementById('message').textContent = '';
+            document.getElementById('guessInput').value = '';
+        }
+
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById('guessInput').value);
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                document.getElementById('message').textContent = 'Please enter a valid number between 1 and 100.';
+                return;
+            }
+            attempts++;
+            totalAttempts++;
+
+            if (userGuess < randomNumber) {
+                document.getElementById('message').textContent = 'Too low! Try again.';
+            } else if (userGuess > randomNumber) {
+                document.getElementById('message').textContent = 'Too high! Try again.';
+            } else {
+                document.getElementById('message').textContent = `Congratulations! You guessed the correct number in ${attempts} attempts.`;
+                startNewRound();
+            }
+
+            if (attempts === maxAttempts) {
+                document.getElementById('message').textContent = `Sorry, you've reached the maximum number of attempts (${maxAttempts}). The correct number was ${randomNumber}.`;
+                startNewRound();
+            }
+        }
+
+        startNewRound();
+    </script>
+</body>
+</html>
