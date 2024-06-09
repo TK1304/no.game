@@ -29,6 +29,13 @@
         let totalAttempts = 0;
 
         function startNewRound() {
+            if (totalRounds >= 10) {
+                document.getElementById('instructions').textContent = "Game over! You've played 10 rounds.";
+                document.getElementById('guessInput').style.display = 'none';
+                document.querySelector('button').style.display = 'none';
+                return;
+            }
+
             randomNumber = Math.floor(Math.random() * 100) + 1;
             attempts = 0;
             totalRounds++;
